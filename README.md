@@ -60,3 +60,4 @@ The Laravel framework is open-sourced software licensed under the [MIT license](
 # projet_lara_stage
 # projet_lara_stage
 # projet2_lara_stage
+# projet2_lara_stage
