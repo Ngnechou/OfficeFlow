@@ -23,7 +23,7 @@
                             <path stroke-linecap="round" stroke-linejoin="round" d="M21 8.25L12 13.044 3 8.25 12 3.456 21 8.25z" />
                         </svg>
                     </div>
-                    <h1 class="text-xl font-bold tracking-tight text-slate-800">La Canadienne</h1>
+                    <h1 class="text-xl font-bold tracking-tight text-slate-800">OfficeFlow</h1>
                 </div>
 
                 <nav class="flex-1 px-4 py-6 space-y-1.5 overflow-y-auto">

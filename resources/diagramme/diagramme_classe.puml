@@ -1,0 +1,40 @@
+@startuml
+skinparam backgroundColor #adafb9
+skinparam strokeColor #4f46e5
+skinparam class {
+   backgroundColor #FFFFFF
+    ArrowColor #4f46e5
+    BorderColor #4f46e5
+   FontColor #000000
+}
+
+class User {
+    +id: int
+    +name: string
+    +email: string
+    +password: string
+    +register()
+    +login()
+}
+
+class Task {
+    +id: int
+    +title: string
+    +description: text
+    +status: string
+    +created_at: timestamp
+    +save()
+    +update()
+    +delete()
+}
+
+class Category {
+    +id: int
+    +name: string
+    +slug: string
+}
+
+User "1" -- "0..*" Task : possède >
+Category "1" -- "0..*" Task : classifie >
+
+@enduml

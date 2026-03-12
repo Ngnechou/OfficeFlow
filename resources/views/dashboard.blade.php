@@ -15,6 +15,7 @@
                 @include('partials.admin_content')
             </div>
         @else
+        
             <div class="mt-8">
                 <h2 class="text-xl font-bold mb-4">Mes Tâches Récentes</h2>
                 @include('partials.user_content')

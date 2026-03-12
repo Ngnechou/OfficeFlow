@@ -1,0 +1,46 @@
+@startuml
+' --- Configuration du style Noir & Blanc ---
+skinparam backgroundColor #FFFFFF
+skinparam shadowing false
+skinparam actorBorderColor #000000
+skinparam actorBackgroundColor #FFFFFF
+skinparam usecaseBackgroundColor #FFFFFF
+skinparam usecaseBorderColor #000000
+skinparam usecaseArrowColor #000000
+skinparam FontColor #000000
+skinparam packageBorderColor #000000
+
+left to right direction
+
+' --- Définition des Acteurs ---
+actor "Utilisateur" as user
+actor "Administrateur" as admin
+
+' L'admin est aussi un utilisateur (héritage)
+admin --|> user
+
+package "Système OfficeFlow" {
+    ' Actions communes
+    usecase "S'authentifier" as UC1
+    usecase "Gérer ses tâches (CRUD)" as UC2
+    usecase "Consulter son Dashboard" as UC3
+    usecase "Rechercher/Filtrer" as UC4
+
+    ' Actions spécifiques Admin
+    usecase "Gérer les catégories" as UC5
+    usecase "Gérer les utilisateurs" as UC6
+    usecase "Consulter les logs système" as UC7
+}
+
+' --- Relations ---
+user -- UC1
+user -- UC2
+user -- UC3
+user -- UC4
+
+' L'admin est relié aux actions spécifiques (il a déjà accès aux autres via l'héritage)
+admin -- UC5
+admin -- UC6
+admin -- UC7
+
+@enduml

@@ -1,0 +1,55 @@
+@startuml
+' --- Configuration pour une clarté maximale ---
+skinparam backgroundColor #FFFFFF
+skinparam shadowing false
+skinparam monochrome true
+skinparam glassMode false
+skinparam roundcorner 5
+
+' Configuration des polices et bordures
+skinparam sequence {
+    ArrowColor #000000
+    LifeLineBorderColor #000000
+    ParticipantBorderColor #000000
+    ParticipantBackgroundColor #FFFFFF
+    ActorBorderColor #000000
+    ActorBackgroundColor #FFFFFF
+    BoxBorderColor #000000
+}
+
+actor Administrateur as Admin
+participant "Interface Admin" as View
+participant "AuthMiddleware" as Auth
+participant "CategoryController" as Ctrl
+database "Base de données" as DB
+
+Admin -> View : Se connecte à OfficeFlow
+activate View
+
+View -> Auth : Vérifie les droits (IsAdmin?)
+activate Auth
+Auth --> View : Accès autorisé
+deactivate Auth
+
+Admin -> View : Consulte les catégories
+View -> Ctrl : index()
+activate Ctrl
+Ctrl -> DB : SELECT * FROM categories
+activate DB
+DB --> Ctrl : Liste des catégories
+deactivate DB
+Ctrl --> View : Affiche les catégories
+deactivate Ctrl
+
+Admin -> View : Ajoute ou modifie une catégorie
+View -> Ctrl : store() / update()
+activate Ctrl
+Ctrl -> DB : UPDATE / INSERT categories
+activate DB
+DB --> Ctrl : Confirmation SQL
+deactivate DB
+Ctrl --> View : Message "Modifications enregistrées"
+deactivate Ctrl
+
+deactivate View
+@enduml
