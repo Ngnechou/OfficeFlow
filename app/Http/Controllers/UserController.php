@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\User;
 
-class UserController extends Controller
+class UserController 
 {
     public function index()
     {
@@ -21,5 +21,11 @@ class UserController extends Controller
 
 
         return redirect()->back()->with('success', 'Rôle mis à jour avec succès.');
+    }
+
+    public function show(User $user)
+    {
+        // Cette ligne va chercher la vue resources/views/users/show.blade.php
+        return view('users.show', compact('user'));
     }
 }

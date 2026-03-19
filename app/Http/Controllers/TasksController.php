@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Task;
 use App\Models\Category;
+use App\Http\Requests\TaskRequest; 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Carbon\Carbon;
@@ -31,10 +32,11 @@ class TasksController extends Controller
             $query->where('status', $request->status);
         }
 
-        $tasks = $query->with('category')->latest()->get();
+        // Optimisation : 10 tâches par page au lieu de 2
+        $tasks = $query->with('category')->latest()->paginate(10);
         $categories = Category::all();
 
-        // Statistiques globales pour les compteurs
+        // Statistiques globales
         $allUserTasks = Task::where('user_id', $userId)->get();
         $stats = [
             'total'     => $allUserTasks->count(),
@@ -43,7 +45,7 @@ class TasksController extends Controller
             'a_faire'   => $allUserTasks->where('status', 'À faire')->count(),
         ];
 
-        // Préparation des données du graphique (7 derniers jours)
+        // Graphique des 7 derniers jours
         $chartLabels = [];
         $chartValues = [];
         for ($i = 6; $i >= 0; $i--) {
@@ -60,7 +62,7 @@ class TasksController extends Controller
     }
 
     /**
-     * Affiche le formulaire de création (C'est cette méthode qui manquait !)
+     * Formulaire de création
      */
     public function create()
     {
@@ -69,22 +71,15 @@ class TasksController extends Controller
     }
 
     /**
-     * Enregistre une nouvelle tâche
+     * Enregistre une nouvelle tâche (Utilise TaskRequest pour le français)
      */
-    public function store(Request $request) 
+    public function store(TaskRequest $request) 
     {
-        $validated = $request->validate([
-            'title'       => 'required|string|max:255',
-            'description' => 'nullable|string',
-            'category_id' => 'required|exists:categories,id',
-            'status'      => 'required|in:À faire,En cours,Terminé',
-        ]);
-
         Task::create([
-            'title'       => $validated['title'],
-            'description' => $validated['description'],
-            'category_id' => $validated['category_id'],
-            'status'      => $validated['status'],
+            'title'       => $request->title,
+            'description' => $request->description,
+            'category_id' => $request->category_id,
+            'status'      => $request->status,
             'user_id'     => Auth::id(),
         ]);
 
@@ -92,11 +87,10 @@ class TasksController extends Controller
     }
 
     /**
-     * Affiche le formulaire d'édition
+     * Formulaire d'édition
      */
     public function edit(Task $task)
     {
-        // Sécurité : vérifier que l'utilisateur est propriétaire
         if ($task->user_id !== Auth::id()) abort(403);
 
         $categories = Category::all();
@@ -104,26 +98,19 @@ class TasksController extends Controller
     }
 
     /**
-     * Met à jour la tâche
+     * Mise à jour (Utilise TaskRequest pour le français)
      */
-    public function update(Request $request, Task $task)
+    public function update(TaskRequest $request, Task $task)
     {
         if ($task->user_id !== Auth::id()) abort(403);
 
-        $validated = $request->validate([
-            'title'       => 'required|string|max:255',
-            'category_id' => 'required|exists:categories,id',
-            'status'      => 'required|in:À faire,En cours,Terminé',
-            'description' => 'nullable|string',
-        ]);
-
-        $task->update($validated);
+        $task->update($request->validated());
 
         return redirect()->route('tasks.index')->with('success', 'Mise à jour réussie !');
     }
 
     /**
-     * Supprime la tâche
+     * Suppression
      */
     public function destroy(Task $task)
     {

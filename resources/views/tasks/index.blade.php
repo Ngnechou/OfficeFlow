@@ -48,8 +48,8 @@
                 </div>
             </div>
 
-            <div class="bg-white shadow-sm border border-gray-200 rounded-2xl overflow-hidden">
-                <table class="min-w-full divide-y divide-gray-200">
+            <div class="bg-white shadow-sm border border-gray-200 rounded-2xl overflow-hidden pb-6">
+                <table class="min-w-full divide-y divide-gray-200 pb-4">
                     <thead class="bg-gray-50">
                         <tr>
                             <th class="px-6 py-4 text-left text-xs font-bold text-gray-500 uppercase tracking-wider">Titre</th>
@@ -108,6 +108,10 @@
                         @endforelse
                     </tbody>
                 </table>
+            </div>
+            <div class="p-6">
+
+                {{ $tasks->links() }}
             </div>
         </div>
     </div>

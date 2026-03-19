@@ -32,7 +32,7 @@
                                 </div>
                                 <input type="text" name="name" id="name" value="{{ old('name') }}"
                                     class="block w-full pl-10 pr-3 py-3 border-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 rounded-xl shadow-sm transition-all"
-                                    placeholder="Ex: Facturation, Services, RH..." required>
+                                    placeholder="Ex: Facturation, Services, RH..." >
                             </div>
                             @error('name')
                                 <p class="mt-2 text-sm text-red-600 font-medium">{{ $message }}</p>

@@ -13,7 +13,7 @@ Route::get('/', function () {
     
 }) ->name('welcome');
 
-// UNE SEULE ROUTE POUR LE DASHBOARD
+
 Route::get('/dashboard', [DashboardController::class, 'index'])
     ->middleware(['auth', 'verified', ])
     ->name('dashboard');
@@ -23,14 +23,7 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
-    // Routes pour les catégories
-    Route::prefix('categories')->group(function () {
-        Route::get('/', [CategoryController::class, 'index'])
-        ->name('categories.index');
-        
-
-
-    });
+  
     // LA ROUTE POUR ENREGISTRER LES TÂCHES
     Route::post('/tasks', [TasksController::class, 'store'])->name('tasks.store');
 });
@@ -44,10 +37,12 @@ Route::middleware(['auth'])->group(function () {
     Route::resource('tasks', TasksController::class);
 });
 
-Route::middleware(['auth', ])->group(function () {
-    
+Route::middleware(['auth'])->group(function () {
     Route::get('/users', [UserController::class, 'index'])->name('users.index');
+    Route::get('/users/{user}', [UserController::class, 'show'])->name('users.show');
     Route::patch('/users/{user}/role', [UserController::class, 'updateRole'])->name('users.updateRole');
+    // AJOUTEZ CETTE LIGNE :
+    Route::delete('/users/{user}', [UserController::class, 'destroy'])->name('users.destroy');
 });
 
 require __DIR__.'/auth.php';

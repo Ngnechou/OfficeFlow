@@ -23,7 +23,7 @@
                             <label for="title" class="block text-sm font-semibold text-slate-700 mb-2">Titre de la tâche</label>
                             <input type="text" name="title" id="title" value="{{ old('title') }}" 
                                 class="block w-full border-gray-300 focus:ring-indigo-500 focus:border-indigo-500 rounded-xl shadow-sm transition-all" 
-                                placeholder="Ex: Rédaction du rapport mensuel" required>
+                                placeholder="Ex: Rédaction du rapport mensuel" >
                             @error('title') <p class="mt-1 text-sm text-red-600 font-medium">{{ $message }}</p> @enderror
                         </div>
 
@@ -31,7 +31,7 @@
                             <div>
                                 <label for="category_id" class="block text-sm font-semibold text-slate-700 mb-2">Catégorie</label>
                                 <select name="category_id" id="category_id" 
-                                    class="block w-full border-gray-300 focus:ring-indigo-500 focus:border-indigo-500 rounded-xl shadow-sm transition-all" required>
+                                    class="block w-full border-gray-300 focus:ring-indigo-500 focus:border-indigo-500 rounded-xl shadow-sm transition-all" >
                                     <option value="">-- Choisir une catégorie --</option>
                                     @foreach($categories as $category)
                                         <option value="{{ $category->id }}" {{ old('category_id') == $category->id ? 'selected' : '' }}>
