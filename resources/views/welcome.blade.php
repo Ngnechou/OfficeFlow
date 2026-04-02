@@ -519,7 +519,7 @@
                         Prêt à transformer votre gestion administrative ?
                     </h2>
                     <p class="text-blue-100 text-lg md:text-xl mb-10 max-w-3xl mx-auto">
-                        Rejoignez plus de 500 professionnels qui font déjà confiance à La Canadienne pour optimiser leur productivité.
+                        Rejoignez plus de 500 professionnels qui font déjà confiance à OFFICEFLOW pour optimiser leur productivité.
                     </p>
                     
                     <div class="flex flex-col sm:flex-row gap-4 justify-center">
